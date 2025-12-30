@@ -1,0 +1,10 @@
+# Python artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Project specific
+experiments/
+docs/
+data/
