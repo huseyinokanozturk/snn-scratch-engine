@@ -1,52 +1,44 @@
-# Spiking Neural Network (SNN) Engine from Scratch
-### Reward-Modulated STDP Implementation
+# Project VITALIS: Energy-Constrained Neuromorphic Learning Agent
 
 ![Python](https://img.shields.io/badge/Python-3.x-blue?style=flat-square)
 ![NumPy](https://img.shields.io/badge/Library-NumPy_Only-green?style=flat-square)
 ![Status](https://img.shields.io/badge/Status-In_Development-orange?style=flat-square)
 
 ## Overview
-This project is a biologically plausible **Spiking Neural Network (SNN)** simulation engine built entirely from scratch using **Python** and **NumPy**. It avoids high-level deep learning frameworks (like PyTorch or TensorFlow) to implement and analyze the core dynamics of **Third Generation Neural Networks** [1].
 
-The primary goal is to solve classification tasks (MNIST) using **Reward-Modulated Spike-Timing-Dependent Plasticity (R-STDP)**, avoiding standard backpropagation. This mimics the brain's "Three-Factor Learning Rule":
-1.  **Pre-synaptic activity** (Input)
-2.  **Post-synaptic activity** (Output)
-3.  **Global Neuromodulation** (Reward/Dopamine signal)
+This project is a biologically plausible **Spiking Neural Network (SNN)** simulation engine built entirely from scratch using **Python** and **NumPy**. Rather than using high-level frameworks like PyTorch, I am building the mathematical backend to analyze the core dynamics of Third Generation Neural Networks.
 
-## Theoretical Background
-Unlike traditional ANNs (2nd Generation) that use continuous activation functions (Sigmoid/ReLU) and firing rates, this project utilizes **Spiking Neurons (3rd Generation)**. Information is encoded in the precise timing of single action potentials (spikes), which is computationally more powerful and biologically realistic [1].
+The primary goal of Project VITALIS is to create an **autonomous agent** capable of navigation and survival. Unlike traditional AI agents that optimize solely for reward, this agent operates under **metabolic constraints**. It must manage its energy levels, utilize sleep cycles for memory consolidation, and adapt its learning rate based on environmental context (hunger/satiety).
+
+## Key Features & Biological Mechanisms
+
+This engine combines several neuroscientific concepts into a single cohesive system:
+
+* **R-STDP (Reward-Modulated Spike-Timing-Dependent Plasticity):** Implements the brain's "Three-Factor Learning Rule" (Pre-synaptic activity, Post-synaptic activity, and Dopamine reward signal) to solve the credit assignment problem.
+* **Metabolic Neurons:** Neurons consume energy with every spike. The system must learn to be energy-efficient (sparse coding) to survive.
+* **Homeostasis:** Dynamic threshold adaptation prevents the network from becoming hyperactive (epileptic) or dormant.
+* **Neuromodulation:** Global parameters like Dopamine (reward) and Acetylcholine (attention) are regulated by the agent's internal state (e.g., battery/hunger levels).
 
 ## Tech Stack
+
 * **Language:** Python
-* **Core Logic:** NumPy (for linear algebra and vectorization)
-* **Visualization:** Matplotlib (for raster plots and membrane potential traces)
+* **Core Logic:** NumPy (vectorized matrix operations for performance)
+* **Visualization:** Matplotlib / PyGame (for real-time agent visualization and spike rasters)
 
 ## Project Structure
+
 ```text
-snn-scratch-engine/
-├── data/           # Dataset storage
-├── docs/           # Documentation and references
-├── experiments/    # Experiment results and logs
-├── src/            # Core engine source code
+project-vitalis/
+├── docs/               # Documentation and references
+├── experiments/        # Logs and weight checkpoints
+├── src/                # Core engine source code
 │   ├── __init__.py
-│   ├── neuron.py   # LIF Neuron logic
-│   ├── layer.py    # Layer management
-│   ├── synapse.py  # Synapse and STDP implementation
-│   ├── network.py  # Network assembly
-│   ├── encoding.py # Spike encoding mechanisms
-│   └── monitor.py  # State monitoring and recording
-├── tests/          # Unit and integration tests
-├── main.py         # Main entry point
+│   ├── neuron.py       # Metabolic LIF Neuron logic
+│   ├── synapse.py      # R-STDP and Eligibility Trace implementation
+│   ├── network.py      # Vectorized network management
+│   ├── environment.py  # 2D Simulation world (Robot, Food, Walls)
+│   └── monitor.py      # State monitoring (Energy, Spikes, Rewards)
+├── tests/              # Unit tests for STDP and biological mechanics
+├── main.py             # Main simulation entry point
 ├── requirements.txt
 └── README.md
-```
-
-## Roadmap (5-Month Plan)
-- [ ] **Month 1:** Modeling LIF Neuron physics & refractory periods.
-- [ ] **Month 2:** Implementing Synapses & basic STDP learning rules.
-- [ ] **Month 3:** Integrating Reward Modulation (Three-Factor Rule).
-- [ ] **Month 4:** Encoding MNIST data into spike trains & Full training.
-- [ ] **Month 5:** Analysis, ablation studies, and final reporting.
-
-## References
-1. Maass, W. (1997). Networks of spiking neurons: The third generation of neural network models. *Neural Networks*, 10(9), 1659-1671.
