@@ -1,4 +1,4 @@
-# Project VITALIS: Energy-Constrained Neuromorphic Learning Agent
+# RHEO SNN: Reward & Homeostatic Energy Optimization Spiking Neural Network
 
 ![Python](https://img.shields.io/badge/Python-3.x-blue?style=flat-square)
 ![NumPy](https://img.shields.io/badge/Library-NumPy_Only-green?style=flat-square)
@@ -8,7 +8,7 @@
 
 This project is a biologically plausible **Spiking Neural Network (SNN)** simulation engine built entirely from scratch using **Python** and **NumPy**. Rather than using high-level frameworks like PyTorch, I am building the mathematical backend to analyze the core dynamics of Third Generation Neural Networks.
 
-The primary goal of Project VITALIS is to create an **autonomous agent** capable of navigation and survival. Unlike traditional AI agents that optimize solely for reward, this agent operates under **metabolic constraints**. It must manage its energy levels, utilize sleep cycles for memory consolidation, and adapt its learning rate based on environmental context (hunger/satiety).
+The primary goal of RHEO SNN is to create an **autonomous agent** capable of navigation and survival. Unlike traditional AI agents that optimize solely for reward, this agent operates under **metabolic constraints**. It must manage its energy levels, utilize sleep cycles for memory consolidation, and adapt its learning rate based on environmental context (hunger/satiety).
 
 ## Key Features & Biological Mechanisms
 
