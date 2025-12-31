@@ -84,9 +84,16 @@ class Network:
         self.traces = np.zeros(self.N)
 
         # Synaptic weight matrix initialization (random small weights)
-        self.weights = np.random.uniform(0, 2.0, (self.N, self.N))
+        self.weights = np.random.uniform(-2, 5.0, (self.N, self.N))
 
         np.fill_diagonal(self.weights, 0)
+
+        # Lateral Inhibition
+        motor_left_idx = self.N - 2
+        motor_right_idx = self.N - 1
+
+        self.weights[motor_left_idx, motor_right_idx] = -5.0
+        self.weights[motor_right_idx, motor_left_idx] = -5.0
 
         # Plasticity traces (Eligibility traces for R-STDP)
         self.eligibility = np.zeros((self.N, self.N))
