@@ -85,7 +85,7 @@ class LIFNeuron:
         """
         Update the neuron's state.
         Args:
-            input_current (float): Input current in V. The current that flows into the neuron.
+            input_current (float): Input current in mV. The current that flows into the neuron.
         """
         self.trace *= self.trace_decay # Decay the trace at each time step
 
