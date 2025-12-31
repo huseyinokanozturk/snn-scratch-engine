@@ -1,10 +1,34 @@
-# Python artifacts
+# Python
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
 
-# Project specific
-experiments/
-docs/
-data/
+# Virtual environments
+venv/
+env/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Project-specific
+brain_weights/*.npz
+experiments/*.json
+experiments/*.csv
+
+# Keep placeholder files
+!brain_weights/.gitkeep
+!experiments/.gitkeep
+!src/environment/maps/.gitkeep
+
+# OS files
+.DS_Store
+Thumbs.db

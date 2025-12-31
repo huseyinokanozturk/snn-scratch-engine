@@ -1,44 +1,165 @@
-# RHEO SNN: Reward & Homeostatic Energy Optimization Spiking Neural Network
+# RHEO SNN - Brain & Survival Lab
 
-![Python](https://img.shields.io/badge/Python-3.x-blue?style=flat-square)
-![NumPy](https://img.shields.io/badge/Library-NumPy_Only-green?style=flat-square)
-![Status](https://img.shields.io/badge/Status-In_Development-orange?style=flat-square)
+A **Spiking Neural Network (SNN)** simulation featuring biologically-inspired learning with metabolic constraints and hormonal modulation.
 
-## Overview
+## 🧠 Project Novelty
 
-This project is a biologically plausible **Spiking Neural Network (SNN)** simulation engine built entirely from scratch using **Python** and **NumPy**. Rather than using high-level frameworks like PyTorch, I am building the mathematical backend to analyze the core dynamics of Third Generation Neural Networks.
+### Metabolic Constraints
+Unlike traditional neural networks, RHEO neurons have:
+- **Limited Energy**: Each neuron has a metabolic energy budget that depletes when firing
+- **Fatigue**: Sustained activity leads to elevated firing thresholds
+- **Recovery**: Energy regenerates over time, with layer-specific rates
 
-The primary goal of RHEO SNN is to create an **autonomous agent** capable of navigation and survival. Unlike traditional AI agents that optimize solely for reward, this agent operates under **metabolic constraints**. It must manage its energy levels, utilize sleep cycles for memory consolidation, and adapt its learning rate based on environmental context (hunger/satiety).
+### Hormonal Modulation
+The network features neuromodulators that affect behavior:
+- **Dopamine (DA)**: Reward signal for R-STDP learning
+- **Acetylcholine (ACh)**: Attention/alertness when near obstacles
+- **Serotonin (5HT)**: Stress response that spikes on failure
+- **Exploration Noise**: Increases after failed epochs to try new paths
 
-## Key Features & Biological Mechanisms
+## 📁 Project Structure
 
-This engine combines several neuroscientific concepts into a single cohesive system:
-
-* **R-STDP (Reward-Modulated Spike-Timing-Dependent Plasticity):** Implements the brain's "Three-Factor Learning Rule" (Pre-synaptic activity, Post-synaptic activity, and Dopamine reward signal) to solve the credit assignment problem.
-* **Metabolic Neurons:** Neurons consume energy with every spike. The system must learn to be energy-efficient (sparse coding) to survive.
-* **Homeostasis:** Dynamic threshold adaptation prevents the network from becoming hyperactive (epileptic) or dormant.
-* **Neuromodulation:** Global parameters like Dopamine (reward) and Acetylcholine (attention) are regulated by the agent's internal state (e.g., battery/hunger levels).
-
-## Tech Stack
-
-* **Language:** Python
-* **Core Logic:** NumPy (vectorized matrix operations for performance)
-* **Visualization:** Matplotlib / PyGame (for real-time agent visualization and spike rasters)
-
-## Project Structure
-
-```text
-project-vitalis/
-├── docs/               # Documentation and references
-├── experiments/        # Logs and weight checkpoints
-├── src/                # Core engine source code
+```
+rheo-snn/
+├── main.py                    # Main application entry point
+├── brain_weights/             # Saved neural network weights
+│   └── brain_weights.npz      # Trained brain (auto-generated)
+├── experiments/               # Simulation stats and logs
+│   ├── simulation_stats.json  # Latest experiment
+│   └── simulation_stats_*.json # Timestamped backups
+├── src/
 │   ├── __init__.py
-│   ├── neuron.py       # Metabolic LIF Neuron logic
-│   ├── synapse.py      # R-STDP and Eligibility Trace implementation
-│   ├── network.py      # Vectorized network management
-│   ├── environment.py  # 2D Simulation world (Robot, Food, Walls)
-│   └── monitor.py      # State monitoring (Energy, Spikes, Rewards)
-├── tests/              # Unit tests for STDP and biological mechanics
-├── main.py             # Main simulation entry point
-├── requirements.txt
+│   ├── network.py             # Layer-based SNN with R-STDP
+│   ├── layer.py               # LIF neuron layer with metabolism
+│   ├── encoding.py            # Sensor-to-spike encoding
+│   ├── decoding.py            # Spike-to-motor decoding
+│   ├── monitor.py             # Performance tracking & analysis
+│   ├── environment/
+│   │   ├── simulation.py      # Pygame environment with physics
+│   │   ├── editor.py          # Visual map editor
+│   │   └── maps/              # Custom JSON map files
+│   └── utils/
+│       └── file_manager.py    # Directory & file utilities
 └── README.md
+```
+
+## 🚀 Quick Start
+
+### Requirements
+```bash
+pip install numpy pygame
+```
+
+### Run the Simulation
+```bash
+python -m main
+```
+
+## 🎮 Controls
+
+### Main Menu
+| Button | Function |
+|--------|----------|
+| **START** | Begin simulation on selected map |
+| **SETTINGS** | Adjust sensors, range, hidden neurons |
+| **LOAD** | Load previously trained brain |
+| **ANALYSIS** | View detailed network statistics |
+| **MAP EDITOR** | Create custom environments |
+| **EXPERIMENTS** | Open experiment logs folder |
+
+### During Simulation
+| Key | Action |
+|-----|--------|
+| `+` / `-` | Increase/decrease simulation speed |
+| `0` | Toggle Turbo Mode (10x speed) |
+| `ESC` | Return to menu (auto-saves brain) |
+
+## 🗺️ Map Editor
+
+Create custom environments with the visual editor.
+
+### Controls
+| Key/Mouse | Action |
+|-----------|--------|
+| **Left Click** | Draw walls (drag to paint) |
+| **Right Click** | Erase walls |
+| **W** | Select Wall tool |
+| **E** | Select Erase tool |
+| **F** | Place Food spawn |
+| **G** | Place Goal (gold target) |
+| **S** | Set agent Spawn point |
+| **Ctrl+S** | Save map |
+| **Ctrl+L** | Load map |
+| **ESC** | Exit editor |
+
+Maps are saved to `src/environment/maps/` as JSON files.
+
+## 💾 Brain Persistence
+
+### Auto-Save
+The brain automatically saves to `brain_weights/brain_weights.npz` when:
+- Returning to menu (ESC key)
+- Completing an epoch with a successful goal
+
+### Manual Load
+Click **LOAD** in the menu to restore a previously trained brain. The network dimensions (sensors, hidden neurons) must match.
+
+## 📊 Experiment Logs
+
+Performance data is automatically saved to `experiments/`:
+- **simulation_stats.json**: Latest session (overwritten)
+- **simulation_stats_YYYYMMDD_HHMMSS.json**: Timestamped backups
+
+### Logged Metrics
+| Metric | Description |
+|--------|-------------|
+| `firing_rates` | Neural activity per layer over time |
+| `energy_levels` | Metabolic health per layer |
+| `rewards` | Reward signal history |
+| `weights_mean/std` | Synaptic weight evolution |
+| `success_epochs` | Goal completion times (learning curve) |
+
+## 🔬 Network Architecture
+
+```
+Input Layer (Sensors)      Hidden Layer (Processing)     Output Layer (Motors)
+     10 neurons       →         50 neurons          →        2 neurons
+   High recovery            Recurrent connections          High energy cost
+   Low energy cost          Moderate metabolism            Learnable via R-STDP
+```
+
+### Weight Matrices
+| Connection | Shape | Learnable |
+|------------|-------|-----------|
+| Input → Hidden | (50, 10) | No |
+| Hidden → Hidden | (50, 50) | No |
+| Hidden → Output | (2, 50) | **Yes (R-STDP)** |
+
+## 📈 Learning Mechanism
+
+### R-STDP (Reward-modulated Spike-Timing Dependent Plasticity)
+1. **Eligibility Trace**: Tracks recent pre-post spike correlations
+2. **Reward Signal**: Dopamine from goal (+500) or penalty (-50)
+3. **Weight Update**: `Δw = learning_rate × eligibility × dopamine`
+
+### Exploration
+After epoch timeout:
+- Serotonin spikes (stress)
+- Eligibility trace weakens recent paths
+- Exploration noise increases 3x
+- Forces agent to try new strategies
+
+## 🛠️ Configuration
+
+Edit `main.py` to adjust defaults:
+```python
+DEFAULT_CONFIG = {
+    'num_sensors': 10,    # Ray sensors
+    'sensor_range': 180,  # Sensor distance (px)
+    'num_hidden': 50,     # Hidden layer neurons
+}
+```
+
+---
+
+**Made with 🧠 and 💻**
